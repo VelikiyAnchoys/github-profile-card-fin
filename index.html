@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Profile Card</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-top">
+                <h1>GitHub Profile Card</h1>
+                <div class="header-actions">
+                    <button id="tokenToggle" class="theme-toggle hidden" title="Настроить GitHub токен">🔑</button>
+                    <button id="themeToggle" class="theme-toggle" title="Переключить тему">🌙</button>
+                </div>
+            </div>
+            <div id="tokenSection" class="token-section hidden">
+                <div class="token-input-wrapper">
+                    <input type="password" id="tokenInput" placeholder="Введите GitHub токен..." autocomplete="off">
+                    <button id="tokenApplyBtn">Применить</button>
+                    <button id="tokenClearBtn" class="token-clear-btn">✕</button>
+                </div>
+                <p class="token-hint">Токен увеличивает лимит запросов с 60 до 5000/час. <a href="https://github.com/settings/tokens" target="_blank">Создать токен</a> (нужны права <code>public_repo</code>)</p>
+            </div>
+            <p class="subtitle">Введите GitHub-юзернейм для просмотра профиля</p>
+        </header>
+
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" id="usernameInput" placeholder="Введите username..." autofocus>
+                <button id="searchBtn">Найти</button>
+                <button id="randomBtn" class="random-btn" title="Случайный пользователь">🎲</button>
+            </div>
+            <div class="compare-toggle">
+                <label class="compare-label">
+                    <input type="checkbox" id="compareCheckbox">
+                    <span>Сравнить с другим пользователем</span>
+                </label>
+            </div>
+            <div id="secondUserInput" class="second-user-input hidden">
+                <div class="search-box secondary">
+                    <input type="text" id="usernameInput2" placeholder="Введите username для сравнения...">
+                </div>
+            </div>
+            <div id="recentSearches" class="recent-searches hidden">
+                <span class="recent-label">Недавние:</span>
+                <div id="recentList" class="recent-list"></div>
+            </div>
+        </div>
+
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Загружаю...</p>
+        </div>
+
+        <div id="error" class="error hidden"></div>
+
+        <div id="result" class="result hidden">
+            <div class="profile-grid" id="profileGrid">
+                <!-- Основной пользователь -->
+                <div class="user-column" id="userColumn1">
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <img id="avatar1" src="" alt="Avatar" class="avatar">
+                            <div class="profile-info">
+                                <h2 id="name1" class="name"></h2>
+                                <p id="login1" class="login"></p>
+                                <p id="bio1" class="bio"></p>
+                            </div>
+                        </div>
+                        <div class="profile-stats">
+                            <div class="stat">
+                                <span class="stat-value" id="publicRepos1">0</span>
+                                <span class="stat-label">Репозитории</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value" id="followers1">0</span>
+                                <span class="stat-label">Подписчики</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value" id="following1">0</span>
+                                <span class="stat-label">Подписки</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="repos-section">
+                        <div class="repos-header">
+                            <h3>Репозитории</h3>
+                            <select class="sort-select" data-user="1">
+                                <option value="updated">По обновлению</option>
+                                <option value="stars">По звёздам</option>
+                                <option value="created">По дате создания</option>
+                            </select>
+                        </div>
+                        <div id="reposList1" class="repos-list"></div>
+                    </div>
+
+                    <div class="languages-section">
+                        <h3>Топ языков</h3>
+                        <div id="languagesList1" class="languages-list"></div>
+                    </div>
+                </div>
+
+                <!-- Второй пользователь (для сравнения) -->
+                <div class="user-column hidden" id="userColumn2">
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <img id="avatar2" src="" alt="Avatar" class="avatar">
+                            <div class="profile-info">
+                                <h2 id="name2" class="name"></h2>
+                                <p id="login2" class="login"></p>
+                                <p id="bio2" class="bio"></p>
+                            </div>
+                        </div>
+                        <div class="profile-stats">
+                            <div class="stat">
+                                <span class="stat-value" id="publicRepos2">0</span>
+                                <span class="stat-label">Репозитории</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value" id="followers2">0</span>
+                                <span class="stat-label">Подписчики</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value" id="following2">0</span>
+                                <span class="stat-label">Подписки</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="repos-section">
+                        <div class="repos-header">
+                            <h3>Репозитории</h3>
+                            <select class="sort-select" data-user="2">
+                                <option value="updated">По обновлению</option>
+                                <option value="stars">По звёздам</option>
+                                <option value="created">По дате создания</option>
+                            </select>
+                        </div>
+                        <div id="reposList2" class="repos-list"></div>
+                    </div>
+
+                    <div class="languages-section">
+                        <h3>Топ языков</h3>
+                        <div id="languagesList2" class="languages-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
