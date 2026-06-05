@@ -27,6 +27,7 @@ cd github-profile-card-fin
 
 ## Деплой
 
+https://velikiyanchoys.github.io/github-profile-card-fin/
 
 ## Что работает
 
