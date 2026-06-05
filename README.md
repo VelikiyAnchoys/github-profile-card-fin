@@ -20,7 +20,7 @@
 ## Как запустить локально
 
 ```
-git clone https://github.com/VelikiyAnchoys/github-profile-card-fin
+git clone https://github.com/VelikiyAnchoys/github-profile-card-fin.git
 cd github-profile-card-fin
 Откройте файл index.html в браузере.
 ```
